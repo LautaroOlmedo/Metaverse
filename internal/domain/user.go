@@ -11,6 +11,7 @@ type User struct {
 	Email          string         `db:"email"`
 	Password       string         `db:"password"`
 	CoinsCollected int16          `db:"coins_collected"`
+	Active         bool           `db:"active"`
 	Position       ActualPosition `db:"position"`
 }
 
