@@ -23,10 +23,30 @@ func NewServer(rabbitMQ rabbitmq.RabbitClient, userHandler handlers.UserHandler,
 }
 
 func (s *Server) StartServer() {
+	err := s.createAndBindingQueue()
+	if err != nil {
+		panic(err)
+	}
 	mux := http.NewServeMux()
-	err := http.ListenAndServe(s.settings.Port, mux)
+
+	log.Printf("Server listening on port: %s", s.settings.Port)
+	err = http.ListenAndServe(s.settings.Port, mux) // ---> blocking function
 	if err != nil {
 		log.Fatalf("Failed to start server: %s", err)
 	}
-	log.Printf("Server listening on port: %s", s.settings.Port)
+
+}
+
+func (s *Server) createAndBindingQueue() error {
+	err := s.rabbitMQ.CreateQueue("users_created", true, false)
+	if err != nil {
+		return err
+	}
+	if err := s.rabbitMQ.CreateBinding("users_created", "customers.created.*", "users_events"); err != nil {
+		panic(err)
+	}
+	if err != nil {
+		return err
+	}
+	return nil
 }

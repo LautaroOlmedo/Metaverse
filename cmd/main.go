@@ -25,7 +25,7 @@ func main() {
 	}
 	defer connection.Close()
 
-	conn, err := rabbitmq.ConnectRabbitMQ("lautaro", "secret", "localhost:5672", "dollar") // myConfig.RabbitMQ.Username, myConfig.RabbitMQ.Password, myConfig.RabbitMQ.Host, myConfig.RabbitMQ.Vhost
+	conn, err := rabbitmq.ConnectRabbitMQ("lautaro", "secret", "localhost:5672", "users") // myConfig.RabbitMQ.Username, myConfig.RabbitMQ.Password, myConfig.RabbitMQ.Host, myConfig.RabbitMQ.Vhost
 	if err != nil {
 		panic(err)
 	}

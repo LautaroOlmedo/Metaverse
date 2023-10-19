@@ -59,7 +59,7 @@ func (u *UserService) Register(name, dni, username, email, password string, age 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	if err := u.rabbitMQ.Send(ctx, "dollar", "dollar.user.created.*", amqp.Publishing{
+	if err := u.rabbitMQ.Send(ctx, "users_events", "users.created.ar", amqp.Publishing{
 		ContentType:  "application/json",
 		DeliveryMode: amqp.Persistent,
 		Body:         userJSON,
