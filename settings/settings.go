@@ -16,10 +16,17 @@ type DatabaseConfig struct {
 	Password string `yaml:"password"`
 	Name     string `yaml:"name"`
 }
+type RabbitMQ struct {
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+	Host     string `yaml:"host"`
+	Vhost    string `yaml:"vhost"`
+}
 
 type Settings struct {
-	Port string         `yaml:"port"`
-	DB   DatabaseConfig `yaml:"database"`
+	Port     string         `yaml:"port"`
+	RabbitMQ RabbitMQ       `yaml:"rabbitMQ"`
+	DB       DatabaseConfig `yaml:"database"`
 }
 
 func New() (*Settings, error) {
