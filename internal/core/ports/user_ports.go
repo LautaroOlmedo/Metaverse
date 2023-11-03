@@ -6,7 +6,7 @@ import "context"
 //
 //go:generate mockery --name=UserQueryRepository --output=domain --inpackage=true
 type UserQueryRepository interface {
-	Login(email, password string) error
+	Login(ctx context.Context, email, password string) error
 }
 
 // UserCommandRepository is the interface that wraps the commands operations
