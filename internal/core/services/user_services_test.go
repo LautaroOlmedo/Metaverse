@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+	"github.com/stretchr/testify/mock"
 	"metaverse/internal/core/ports"
 	"os"
 	"testing"
@@ -14,6 +15,8 @@ var userCommand *ports.MockUserCommandRepository
 func TestMain(m *testing.M) {
 	userQuery = &ports.MockUserQueryRepository{}
 	userCommand = &ports.MockUserCommandRepository{}
+	userQuery.On("Login", mock.Anything, "lautaroolmedo77@gmail.com", "validPassword").Return(nil)
+	userQuery.On("Login", mock.Anything, "lautaroolmedo77@gmail.com", "").Return(InvalidData)
 	code := m.Run()
 	os.Exit(code)
 }
@@ -38,7 +41,7 @@ func TestGetAll(t *testing.T) {
 			test:          "ERROR. invalid password",
 			email:         "lautaroolmedo77@gmail.com",
 			password:      "",
-			expectedError: errors.New(""),
+			expectedError: InvalidData,
 		},
 	}
 

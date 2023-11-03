@@ -14,6 +14,7 @@ import (
 
 var (
 	publishingErr = errors.New("error tiying to publishing msg")
+	InvalidData   = errors.New("invalid data")
 )
 
 type UserService struct {
@@ -36,6 +37,9 @@ func (u *UserService) GetAll() error {
 
 func (u *UserService) Login(email, password string) error {
 	ctx := context.Background()
+	if email == "" || password == "" {
+		return InvalidData
+	}
 	err := u.queryRepository.Login(ctx, email, password)
 	if err != nil {
 		return err
