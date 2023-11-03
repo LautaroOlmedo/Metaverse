@@ -1,6 +1,7 @@
 package services
 
 import (
+	"context"
 	"errors"
 	"metaverse/internal/core/ports"
 	"os"
@@ -17,7 +18,7 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 func TestGetAll(t *testing.T) {
-	//myContext := context.Background()
+	myContext := context.Background()
 
 	type TestCase struct {
 		test          string
@@ -46,7 +47,7 @@ func TestGetAll(t *testing.T) {
 		t.Run(tc.test, func(t *testing.T) {
 			t.Parallel()
 
-			err := userQuery.Login(tc.email, tc.password)
+			err := userQuery.Login(myContext, tc.email, tc.password)
 			if !errors.Is(err, tc.expectedError) {
 				t.Errorf("Expected %v, got %v", tc.expectedError, err)
 			}
