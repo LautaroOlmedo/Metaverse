@@ -3,7 +3,7 @@
 package ports
 
 import (
-	domain "metaverse/internal/core/domain"
+	context "context"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -13,30 +13,18 @@ type MockUserCommandRepository struct {
 	mock.Mock
 }
 
-// Register provides a mock function with given fields: name, dni, username, email, password, age
-func (_m *MockUserCommandRepository) Register(name string, dni string, username string, email string, password string, age int8) (*domain.User, error) {
-	ret := _m.Called(name, dni, username, email, password, age)
+// Register provides a mock function with given fields: ctx, id, name, dni, username, email, password, age
+func (_m *MockUserCommandRepository) Register(ctx context.Context, id string, name string, dni string, username string, email string, password string, age int8) error {
+	ret := _m.Called(ctx, id, name, dni, username, email, password, age)
 
-	var r0 *domain.User
-	var r1 error
-	if rf, ok := ret.Get(0).(func(string, string, string, string, string, int8) (*domain.User, error)); ok {
-		return rf(name, dni, username, email, password, age)
-	}
-	if rf, ok := ret.Get(0).(func(string, string, string, string, string, int8) *domain.User); ok {
-		r0 = rf(name, dni, username, email, password, age)
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, string, string, string, string, string, string, int8) error); ok {
+		r0 = rf(ctx, id, name, dni, username, email, password, age)
 	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*domain.User)
-		}
+		r0 = ret.Error(0)
 	}
 
-	if rf, ok := ret.Get(1).(func(string, string, string, string, string, int8) error); ok {
-		r1 = rf(name, dni, username, email, password, age)
-	} else {
-		r1 = ret.Error(1)
-	}
-
-	return r0, r1
+	return r0
 }
 
 // NewMockUserCommandRepository creates a new instance of MockUserCommandRepository. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

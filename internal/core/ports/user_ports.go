@@ -13,7 +13,7 @@ type UserQueryRepository interface {
 //
 //go:generate mockery --name=UserCommandRepository --output=domain --inpackage=true
 type UserCommandRepository interface {
-	Register(ctx context.Context, name, dni, username, email, password string, age int8) error
+	Register(ctx context.Context, id, name, dni, username, email, password string, age int8) error
 }
 
 // UserService is the business logic of the application

@@ -9,8 +9,8 @@ const (
 	queryListUsers = `
          SELECT * FROM users;`
 	queryInsertUser = `
-         INSERT INTO users (name, email, username, password, dni, age)
-         VALUES (?, ?, ?, ?, ?, ?);`
+         INSERT INTO users (id, name, email, username, password, dni, age)
+         VALUES (?, ?, ?, ?, ?, ?, ?);`
 
 	queryGetUserByEmail = `
          SELECT id, name, email, password FROM users WHERE email = ?;`
@@ -29,12 +29,12 @@ func NewUserCommandMariaDBRepository(db *sqlx.DB) *UserCommandMariaDBRepository 
 	}
 }
 
-func (commandRepo *UserCommandMariaDBRepository) Register(ctx context.Context, name, dni, username, email, password string, age int8) error {
+func (commandRepo *UserCommandMariaDBRepository) Register(ctx context.Context, id, name, dni, username, email, password string, age int8) error {
 	tx, err := commandRepo.db.Begin()
 	if err != nil {
 		return err
 	}
-	_, err = tx.ExecContext(ctx, queryInsertUser, name, email, username, password, dni, age)
+	_, err = tx.ExecContext(ctx, queryInsertUser, id, name, email, username, password, dni, age)
 	if err != nil {
 		tx.Rollback()
 		return err

@@ -49,7 +49,6 @@ func (h *UserHandler) Register(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-
 	err = h.userService.Register(user.Name, user.DNI, user.Username, user.Email, user.Password, user.Age)
 	if err != nil {
 		fmt.Println(err)
